@@ -312,6 +312,16 @@ class GuessTheNumberInputModal(discord.ui.Modal, title="Guess The Number"):
 @bot.event
 async def on_ready(): print(f'{bot.user} has connected to Discord!'); await bot.tree.sync()
 
+@bot.tree.command(name="ping", description="Check the bot's latency.")
+async def ping_command(interaction: discord.Interaction):
+    latency = round(bot.latency * 1000) # Latency in milliseconds
+    await interaction.response.send_message(embed=discord.Embed(
+        title="🏓 Pong!",
+        description=f"My latency is **{latency}ms**.",
+        color=discord.Color.blue() # Or your theme color
+    ))
+
+
 @bot.tree.command(name="connectfour", description="Challenge a player to Connect Four.")
 async def connectfour(i, o: discord.Member):
     if o.bot or o.id == i.user.id: return await i.response.send_message("Invalid opponent.", ephemeral=True)
